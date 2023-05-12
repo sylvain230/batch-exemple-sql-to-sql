@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration>
+<configuration scan="true" scanPeriod="1 minutes">
+
+    <property name="APPLICATION" value="batch-exemple-sql-to-sql"/>
+    <property name="LOG_PATTERN" value="%d{yyyy/MM/dd HH:mm:ss} %yellow([%thread]) %highlight(%-5level) %green(%logger{36}) - %m %n"/>
+    <property name="APPLICATION_BASE" value="batch"/>
+
+    <appender name="allAppender"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${APPLICATION_BASE}/logs/${APPLICATION}/${APPLICATION}-all.log</file>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="errorsAppender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <file>${APPLICATION_BASE}/logs/${APPLICATION}/${APPLICATION}-all.log</file>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Traitement -->
+    <logger name="fr.perso.exemple" level="INFO"/>
+
+    <root level="INFO">
+        <appender-ref ref="console"/>
+    </root>
+</configuration>
